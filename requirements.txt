@@ -1,0 +1,5 @@
+matplotlib
+numpy>=1.13
+scipy
+math
+scikit-image
