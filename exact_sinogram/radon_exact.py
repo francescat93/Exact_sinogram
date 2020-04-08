@@ -10,12 +10,12 @@ def my_phantomgallery( phantom_type ):
     Parameters
     ----------
     phantom_type: 'ellipses', 'shepp_logan','modified_shepp_logan','squares','rectangles'
-    
+
     Returns
     -------
     M : matrix of the elements of the phantom
     """
-    
+
     if phantom_type == 'ellipses':
         # [semiaxis 1, semiaxis 2, x center, y center, phi=angle, greyscale=attenuation]
         p1 = [.7, .8, 0, 0, 0, 1]
@@ -87,12 +87,12 @@ def phantom_ellipses(n_points,E):
     ----------
     n_points:  number of pixels on each row and column
     E:         matrix of the elements of the phantom
-    
+
     Returns
     -------
     phantom : phantom image
     """
-    
+
     x,y = np.meshgrid(np.arange(-1,1,2./n_points),np.arange(-1,1,2./n_points))
     nrow,ncol = E.shape
 
@@ -124,7 +124,7 @@ def phantom_squares(n_points,S):
     ----------
     n_points:  number of pixels on each row and column
     S:         matrix of the elements of the phantom
-    
+
     Returns
     -------
     phantom : phantom image
@@ -165,7 +165,7 @@ def phantom_rectangles(n_points,R):
     ----------
     n_points:  number of pixels on each row and column
     R:         matrix of the elements of the phantom
-    
+
     Returns
     -------
     phantom : phantom image
@@ -205,14 +205,14 @@ def my_radon_analytic(phantom_type, N, theta_vec, M ,  tval_set=None, circle=Fal
     phantom_type : type of the phantom ('ellipses', 'shepp_logan', 'modified_shepp_logan','squares'rectangles')
     theta_vec     : list of the angles
     M            : matrix of the structure of the phantom
-    tval_set     : 
-    circle       : 
-    
+    tval_set     :
+    circle       :
+
     Returns
     -------
     analytical_sinogram : Analytical Sinogram of the given phantom
     """
-    
+
     if phantom_type in ['ellipses', 'shepp_logan', 'modified_shepp_logan']:
             analytical_sinogram = radon_ellipses(N,theta_vec,M, tval_set,circle);
     elif phantom_type== 'squares':
@@ -228,16 +228,16 @@ def my_radon_analytic(phantom_type, N, theta_vec, M ,  tval_set=None, circle=Fal
 
 def radon_ellipses(N,theta_vec, E, tval_set=None, circle=False):
     """
-    Function that compute the analytical_sinogram for phantoms of ellipses type 
+    Function that compute the analytical_sinogram for phantoms of ellipses type
 
     Parameters
     ----------
     N        : dimension of the image
     theta_vec : vector of the angles theta
     E        : matrix of the ellipses parameters
-    tval_set : 
-    circle   : 
-    
+    tval_set :
+    circle   :
+
     Returns
     -------
     analytical_sinogram : Analytical Sinogram
@@ -273,15 +273,15 @@ def radon_ellipses(N,theta_vec, E, tval_set=None, circle=False):
 
 def radon_squares(N,theta_vec,S, circle=False):
     """
-    Function that compute the analytical_sinogram for phantoms of square type 
+    Function that compute the analytical_sinogram for phantoms of square type
 
     Parameters
     ----------
     N        : dimension of the image
     theta_vec : list of the angles
     S        : matrix of the squares parameters
-    circle   : 
-    
+    circle   :
+
     Returns
     -------
     analytical_sinogram : Analytical Sinogram
@@ -337,9 +337,9 @@ def radon_squares(N,theta_vec,S, circle=False):
     #endfor
     radvec = np.sum(tmp,axis=0);
     radvec = radvec/np.amax(radvec);
-    
+
     analytical_sinogram = np.transpose(np.reshape(radvec,(len(theta_vec),len(t_vec))));
-    
+
     return  analytical_sinogram
 
 
@@ -347,15 +347,15 @@ def radon_squares(N,theta_vec,S, circle=False):
 
 def radon_rectangles(N,theta_vec,R, circle = False):
     """
-    Function that compute the analytical_sinogram for phantoms of rectangle type 
+    Function that compute the analytical_sinogram for phantoms of rectangle type
 
     Parameters
     ----------
     N        : dimension of the image
     theta_vec : list of the angles
     R        : matrix of the rectangle parameters
-    circle   : 
-    
+    circle   :
+
     Returns
     -------
     analytical_sinogram : Analytical Sinogram
@@ -413,7 +413,7 @@ def radon_rectangles(N,theta_vec,R, circle = False):
     radvec = np.sum(tmp,axis = 0);
     radvec = radvec/np.amax(radvec);
     analytical_sinogram = np.transpose(np.reshape(radvec,(len(theta_vec),len(t_vec))));
-    
+
     return  analytical_sinogram
 #end
 
@@ -427,12 +427,12 @@ def build_t_theta(N,theta_vec, tval_set=None, circle=False):
     ----------
     N        : dimension of the image
     theta_vec : list of the angles
-    tval_set : 
-    circle   : 
-    
+    tval_set :
+    circle   :
+
     Returns
     -------
-    t_vec       : vector of the t values 
+    t_vec       : vector of the t values
     grid_t      : grid of the t values
     grid_theta  : grid of the theta values
     """
@@ -440,7 +440,7 @@ def build_t_theta(N,theta_vec, tval_set=None, circle=False):
     Nangle = len(theta_vec)
 
     if tval_set is None:
-        print('t_vec default')
+        #print('t_vec default')
         dt = 2./(N-1)
         if not circle:
             N = int(np.ceil(N*np.sqrt(2)))
@@ -448,18 +448,18 @@ def build_t_theta(N,theta_vec, tval_set=None, circle=False):
         else:
             t_vec = np.linspace(-1+dt,1-dt,N)
     else:
-        print('t_vec input')
-        print(tval_set)
+        #print('t_vec input')
+        #print(tval_set)
         t_vec = tval_set
-        
+
     # now make a "t, theta" grid:
     grid_t = npmat.repmat(t_vec,1,len(theta_vec))
     grid_t = np.transpose(grid_t)
-    
+
     #grid_theta = np.zeros((Nrays,1))
     grid_theta = np.tile(theta_vec,(len(t_vec),1)).T.flatten()
     grid_theta = grid_theta.reshape(-1,1)
-    
+
     return t_vec, grid_t, grid_theta
 
 
@@ -472,8 +472,8 @@ class Phantom:
         Parameters and Attributes
         -------------------------
         phantom_type : string, can be 'ellipses', 'shepp_logan', 'modified_shepp_logan','squares','rectangles'
-        circle       : 
-        matrix       : 
+        circle       :
+        matrix       :
         """
         self.phantom_type = phantom_type
         self.circle = circle
@@ -486,7 +486,7 @@ class Phantom:
         Parameters
         ----------
         N : number of pixels of the image in each dimension
-        
+
         Returns
         -------
         P : phantom image
@@ -503,12 +503,12 @@ class Phantom:
 
     def get_sinogram( self, N = 128, theta_vec = None ):
         """ Return the Analytical Sinogram of the phantom.
-        
+
         Parameters
         ----------
         N         : number of pixels of the image in each dimension
         theta_vec : vector of the angles theta
-    
+
         Returns
         -------
         analytical_sinogram : matrix of the Analyitical Sinogram of the phantom

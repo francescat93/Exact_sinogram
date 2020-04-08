@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='exact_sinogram',
-      version='0.1.0',
+      version='0.1.1',
       description='A Python package for the computation of the exact sinogram of different cathegories of phantoms for CT reconstruciton',
       url='http://github.com/francescat93/Exact_sinogram',
       author='Monica Dessole, Marta Gatto, Davide Poggiali, Francesca Tedeschi',
@@ -10,6 +10,6 @@ setup(name='exact_sinogram',
       packages=['exact_sinogram'],
       install_requires=[
           'matplotlib', 'numpy>=1.13', 'scipy',
-          'math', 'scikit-image'
+          'scikit-image'
       ],
       zip_safe=False)
