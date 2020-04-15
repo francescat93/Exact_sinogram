@@ -9,14 +9,14 @@ def my_phantomgallery( phantom_type ):
 
     Parameters
     ----------
-    phantom_type: 'ellipses', 'shepp_logan','modified_shepp_logan','squares','rectangles'
+    phantom_type: 'ellipses' (or 'shepp_logan'),'modified_shepp_logan','squares','rectangles'
 
     Returns
     -------
     M : matrix of the elements of the phantom
     """
 
-    if phantom_type == 'ellipses':
+    if phantom_type == 'ellipses' or 'shepp_logan':
         # [semiaxis 1, semiaxis 2, x center, y center, phi=angle, greyscale=attenuation]
         p1 = [.7, .8, 0, 0, 0, 1]
         p2 = [.65,.75,0,0,0,-.9]
@@ -27,19 +27,6 @@ def my_phantomgallery( phantom_type ):
         p7 = [.05,.05,.5,-.3,0,.8]
         # combine into a matrix with one ellipse in each row
         M = np.array([p1, p2, p3, p4, p5, p6, p7]);
-
-    elif phantom_type == 'shepp_logan':
-        # [semiaxis 1, semiaxis 2, x center, y center, phi=angle, greyscale=attenuation]
-        M = np.array( [[.69,   .92,    0,     0,    0, 2   ],
-                [ .6624, .8740,    0, -.0184,   0, -.98],
-                [ .1100, .3100,  .22,      0, -18,-.02],
-                [ .1600, .4100, -.22,      0,  18,-.02],
-                [ .2100, .2500,    0,    .35,   0,.01],
-                [ .0460, .0460,    0,     .1,   0,.01],
-                [ .0460, .0460,    0,    -.1,   0,.02],
-                [ .0460, .0230, -.08,  -.605,   0,.01],
-                [ .0230, .0230,    0,  -.606,   0,.01],
-                [ .0230, .0460,  .06,  -.605,   0,.01]])
 
     elif phantom_type == 'modified_shepp_logan':
         # [semiaxis 1, semiaxis 2, x center, y center, phi=angle, greyscale=attenuation]
@@ -129,9 +116,9 @@ def phantom_squares(n_points,S):
     -------
     phantom : phantom image
     """
-    x,y = np.meshgrid(np.arange(-1,1,2/n_points),np.arange(-1,1,2/n_points))    #ogni coppia (x,y) identifica un pixel (coordinate del suo centro?)
+    x,y = np.meshgrid(np.arange(-1,1,2/n_points),np.arange(-1,1,2/n_points))  
     nrow,ncol = S.shape
-    phantom1 = np.zeros((y.shape[0], y.shape[1], nrow))                         #tensore 3D (la terza dimensione individua i quadrati)
+    phantom1 = np.zeros((y.shape[0], y.shape[1], nrow))                        
 
     for k in range(nrow): #itero sui quadrati
         x_new = x - S[k,0]
@@ -196,17 +183,17 @@ def phantom_rectangles(n_points,R):
     phantom = np.flipud(phantom1)
     return phantom
 
-def my_radon_analytic(phantom_type, N, theta_vec, M ,  tval_set=None, circle=False ):
+def my_radon_analytic(phantom_type, N, theta_vec, M ,  tvec_set=None, circle=False ):
     """
     Function that returns the analytical_sinogram given the phantom.
 
     Parameters
     ----------
     phantom_type : type of the phantom ('ellipses', 'shepp_logan', 'modified_shepp_logan','squares'rectangles')
-    theta_vec     : list of the angles
+    theta_vec    : list of the angles
     M            : matrix of the structure of the phantom
-    tval_set     :
-    circle       :
+    tvec_set     : vector of the t values given from by the user
+    circle       : as in the function iradon of scikit-image "assume the reconstructed image is zero outside the inscribed circle. Also changes the default output_size to match the behaviour of radon called with circle=True."
 
     Returns
     -------
@@ -214,7 +201,7 @@ def my_radon_analytic(phantom_type, N, theta_vec, M ,  tval_set=None, circle=Fal
     """
 
     if phantom_type in ['ellipses', 'shepp_logan', 'modified_shepp_logan']:
-            analytical_sinogram = radon_ellipses(N,theta_vec,M, tval_set,circle);
+            analytical_sinogram = radon_ellipses(N,theta_vec,M, tvec_set,circle);
     elif phantom_type== 'squares':
             analytical_sinogram = radon_squares(N,theta_vec,M, circle);
     elif phantom_type== 'rectangles':
@@ -226,17 +213,17 @@ def my_radon_analytic(phantom_type, N, theta_vec, M ,  tval_set=None, circle=Fal
 
 
 
-def radon_ellipses(N,theta_vec, E, tval_set=None, circle=False):
+def radon_ellipses(N,theta_vec, E, tvec_set=None, circle=False):
     """
     Function that compute the analytical_sinogram for phantoms of ellipses type
 
     Parameters
     ----------
-    N        : dimension of the image
+    N         : dimension of the image
     theta_vec : vector of the angles theta
-    E        : matrix of the ellipses parameters
-    tval_set :
-    circle   :
+    E         : matrix of the ellipses parameters
+    tvec_set  : vector of the t values given from by the user
+    circle    : as in the function iradon of scikit-image "assume the reconstructed image is zero outside the inscribed circle. Also changes the default output_size to match the behaviour of radon called with circle=True."
 
     Returns
     -------
@@ -244,7 +231,7 @@ def radon_ellipses(N,theta_vec, E, tval_set=None, circle=False):
     """
 
 
-    [t_vec, grid_t, grid_theta] = build_t_theta(N,theta_vec, tval_set=tval_set, circle =circle);
+    [t_vec, grid_t, grid_theta] = build_t_theta(N,theta_vec, tvec_set=tvec_set, circle =circle);
 
     (nrowE,ncolE) = E.shape;
     tmp = np.zeros((nrowE,len(grid_theta)));
@@ -277,10 +264,10 @@ def radon_squares(N,theta_vec,S, circle=False):
 
     Parameters
     ----------
-    N        : dimension of the image
+    N         : dimension of the image
     theta_vec : list of the angles
-    S        : matrix of the squares parameters
-    circle   :
+    S         : matrix of the squares parameters
+    circle    : as in the function iradon of scikit-image "assume the reconstructed image is zero outside the inscribed circle. Also changes the default output_size to match the behaviour of radon called with circle=True."
 
     Returns
     -------
@@ -352,9 +339,9 @@ def radon_rectangles(N,theta_vec,R, circle = False):
     Parameters
     ----------
     N        : dimension of the image
-    theta_vec : list of the angles
+    theta_vec: list of the angles
     R        : matrix of the rectangle parameters
-    circle   :
+    circle   : as in the function iradon of scikit-image "assume the reconstructed image is zero outside the inscribed circle. Also changes the default output_size to match the behaviour of radon called with circle=True."
 
     Returns
     -------
@@ -379,7 +366,7 @@ def radon_rectangles(N,theta_vec,R, circle = False):
                 else:
                     v1 = 0;
                     v2 = 0;
-				    #endif
+                #endif
             else:
                 v1 = (t_new*np.cos(theta_new)- m)/np.sin(theta_new);
                 v2 = (t_new*np.cos(theta_new)+ m)/np.sin(theta_new);
@@ -415,20 +402,19 @@ def radon_rectangles(N,theta_vec,R, circle = False):
     analytical_sinogram = np.transpose(np.reshape(radvec,(len(theta_vec),len(t_vec))));
 
     return  analytical_sinogram
-#end
 
 
 
-def build_t_theta(N,theta_vec, tval_set=None, circle=False):
+def build_t_theta(N,theta_vec, tvec_set=None, circle=False):
     """
     Function that compute the grid of t and theta for the radon trasform
 
     Parameters
     ----------
     N        : dimension of the image
-    theta_vec : list of the angles
-    tval_set :
-    circle   :
+    theta_vec: list of the angles
+    tvec_set : vector of the t values given from by the user
+    circle   : as in the function iradon of scikit-image "assume the reconstructed image is zero outside the inscribed circle. Also changes the default output_size to match the behaviour of radon called with circle=True."
 
     Returns
     -------
@@ -439,8 +425,7 @@ def build_t_theta(N,theta_vec, tval_set=None, circle=False):
 
     Nangle = len(theta_vec)
 
-    if tval_set is None:
-        #print('t_vec default')
+    if tvec_set is None:
         dt = 2./(N-1)
         if not circle:
             N = int(np.ceil(N*np.sqrt(2)))
@@ -448,9 +433,7 @@ def build_t_theta(N,theta_vec, tval_set=None, circle=False):
         else:
             t_vec = np.linspace(-1+dt,1-dt,N)
     else:
-        #print('t_vec input')
-        #print(tval_set)
-        t_vec = tval_set
+        t_vec = tvec_set
 
     # now make a "t, theta" grid:
     grid_t = npmat.repmat(t_vec,1,len(theta_vec))
@@ -472,8 +455,8 @@ class Phantom:
         Parameters and Attributes
         -------------------------
         phantom_type : string, can be 'ellipses', 'shepp_logan', 'modified_shepp_logan','squares','rectangles'
-        circle       :
-        matrix       :
+        circle       : as in the function iradon of scikit-image "assume the reconstructed image is zero outside the inscribed circle. Also changes the default output_size to match the behaviour of radon called with circle=True."
+        matrix       : matrix of the phantom
         """
         self.phantom_type = phantom_type
         self.circle = circle
