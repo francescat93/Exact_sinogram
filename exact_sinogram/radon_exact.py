@@ -16,7 +16,7 @@ def my_phantomgallery( phantom_type ):
     M : matrix of the elements of the phantom
     """
 
-    if phantom_type == 'ellipses' or 'shepp_logan':
+    if phantom_type == 'ellipses' or phantom_type == 'shepp_logan':
         # [semiaxis 1, semiaxis 2, x center, y center, phi=angle, greyscale=attenuation]
         p1 = [.7, .8, 0, 0, 0, 1]
         p2 = [.65,.75,0,0,0,-.9]
