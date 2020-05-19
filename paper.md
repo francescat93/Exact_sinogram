@@ -1,4 +1,29 @@
-\maketitle
+---
+title: 'Exact sinogram: an analytical approachto the Radon transform of phantoms'
+tags:
+  - Python
+  - medical imaging
+  - tomography
+  - analitical radon
+authors:
+  - name: Dessole. M
+    affiliation: 1
+  - name: Gatto M.
+    affiliation: 1
+  - name: Poggiali D.
+    affiliation: 2
+  - name: Tefeschi F. 
+    affiliation: 1  
+affiliations:
+ - name: Department of Mathematics “Tullio Levi Civita”, University of Padova, Italy
+   index: 1
+ - name: PNC - Padova Neuroscience Center, Italy
+   index: 2
+date: 19 May 2020
+bibliography: references.bib
+
+---
+
 Introduction and motivations
 ============================
 
