@@ -4,7 +4,7 @@ tags:
   - Python
   - medical imaging
   - tomography
-  - analitical radon
+  - analytical radon
 authors:
   - name: Dessole. M
     affiliation: 1
