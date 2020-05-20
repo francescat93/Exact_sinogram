@@ -84,6 +84,7 @@ equation, e.g. ellipses, and the polygons, e.g. squares and rectangles.
 We give here a brief description of two examples. More details can be
 found in [@Feeman].
 
+### Phantom of ellipses. 
 Every ellipse in the $xy$-plane is uniquely determined by six real
 parameters: its semi-axes $a$ and $b$, the coordinates ($x_0, y_0$) of
 its center point, the angle $\phi$ of rotation with respect to the
@@ -106,7 +107,8 @@ distance, and is expressed as $$\label{eq:radon_ellipse}
     Rf_{\epsilon}(t,\theta)= \delta \frac{2ab\sqrt{b^2\sin^2{\hat{\theta}}+a^2\cos^2{\hat{\theta}}-\hat{t}^2}}{b^2\sin^2{\hat{\theta}}+a^2\cos^2{\hat{\theta}}} & \text{if }  \hat{t}^2\leq b^2\sin^2{\hat{\theta}}+a^2\cos^2{\hat{\theta}},\\
     Rf_{\epsilon}(t,\theta)=0 & \text{otherwise}.
     \end{cases}$$
-
+    
+### Phanthom of squares
 A square in general position in the plane is, instead, defined by five
 parameters: coordinates $(x_0,y_0)$ of the center, side length $w$,
 angle of counterclockwise rotation $\phi$ from the horizontal and the
