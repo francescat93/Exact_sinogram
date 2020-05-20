@@ -212,11 +212,10 @@ measuring the classical $2$-norm and we collect the results in Table
 [\[tab:errors\]](#tab:errors){reference-type="ref"
 reference="tab:errors"}.
 
-\centering
-                                                         Ellipses (Shepp-Logan)   Ellipses (Modified Shepp-Logan)   Squares   Rectangles
-  ----------------------------------------------------- ------------------------ --------------------------------- --------- ------------
-   $\frac{\Vert P_{an} - P \Vert_2}{\Vert P \Vert_2}$           0.03073                       0.02590               0.02703    0.01838
-   $\frac{\Vert P_{inv} - P \Vert_2}{\Vert P \Vert_2}$          0.03604                       0.03191               0.01997    0.02588
+|                                                      |   Ellipses (Shepp-Logan) |  Ellipses (Modified Shepp-Logan) |  Squares  | Rectangles |
+|-----------------------------------------------------|------------------------|---------------------------------|--------- ------------|
+ |  $\frac{\Vert P_{an} - P \Vert_2}{\Vert P \Vert_2}$  |         0.03073      |                 0.02590         |      0.02703 |   0.01838
+|   $\frac{\Vert P_{inv} - P \Vert_2}{\Vert P \Vert_2}$ |         0.03604      |                 0.03191         |      0.01997 |   0.02588
 
   : Relative errors of the image reconstructed from the analytical
   sinogram $P_{an}$ and the image reconstructed form the numerical
