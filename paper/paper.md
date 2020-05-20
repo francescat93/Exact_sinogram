@@ -137,8 +137,7 @@ with the analytical approach.
 
 ![Phantom of rectangles (left), its approximated (center) and exact
 (right)
-sinograms.](JOSSimages/phantom_rectangles.png "fig:")
-![Phantom of rectangles (left), its approximated (center) and exact
+sinograms.](JOSSimages/phantom_rectangles.png "fig:") | ![Phantom of rectangles (left), its approximated (center) and exact
 (right)
 sinograms.](JOSSimages/analytical_sinograms_rectangles.png "fig:")
 
