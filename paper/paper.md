@@ -135,13 +135,10 @@ inverse Radon transform provided by the iradon function of the Python
 library Scikit-image [@scikitimage]. We would expect a smaller error
 with the analytical approach.
 
-| ![Phantom of rectangles (left), its approximated (center) and exact
-(right)
-sinograms.](JOSSimages/phantom_rectangles.png "fig:") | ![Phantom of rectangles (left), its approximated (center) and exact
-(right)
-sinograms.](JOSSimages/analytical_sinograms_rectangles.png "fig:") |
+![](JOSSimages/phantom_rectangles.png "fig:") 
+![](JOSSimages/analytical_sinograms_rectangles.png "fig:")
 
-*Phantom of rectangles (left), its approximated (center) and exact (right) sinograms.*
+*Phantom of rectangles, its approximated and exact sinograms.*
 
 The library
 ===========
