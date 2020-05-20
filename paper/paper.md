@@ -47,7 +47,7 @@ is possible to compute analytically the Radon transform of a phantom.\
 The scope of this work is to compare the use of the discrete Radon
 transform, that yields an approximate sinogram, and the correspondent
 analytical sinogram for image reconstruction.\
-We created `exact-sinogram`, an open-source python library of Analytical
+We created `exact-sinogram` [@exact_sinogram], an open-source python library of Analytical
 Radon Transforms for different classes of phantoms, obtained as a
 combination of ellipses, squares or rectangles, in order to successively
 reconstruct the original image and to analyze the error.
