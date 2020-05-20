@@ -233,3 +233,6 @@ smaller relative error (see Table
 [\[tab:errors\]](#tab:errors){reference-type="ref"
 reference="tab:errors"}) with respect to the reconstruction through the
 iradon function.
+
+References
+==========
