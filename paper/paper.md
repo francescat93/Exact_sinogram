@@ -141,7 +141,7 @@ sinograms.](JOSSimages/phantom_rectangles.png "fig:")
 ![Phantom of rectangles (left), its approximated (center) and exact
 (right)
 sinograms.](JOSSimages/analytical_sinograms_rectangles.png "fig:")
-
+*Phantom of rectangles (left), its approximated (center) and exact (right) sinograms.*
 
 The library
 ===========
